@@ -43,6 +43,10 @@
                         fieldValue = formatDate(userInfo[field]);
                     }
 
+                    if (field === 'badges') {
+                        fieldValue = processBadges(userInfo[field]);
+                    }
+
                     const infoItem = document.createElement('p');
                     infoItem.textContent = `${field}: ${fieldValue}`;
                     userInfoContainer.appendChild(infoItem);
@@ -62,6 +66,28 @@
         function formatDate(dateString) {
             const date = new Date(dateString);
             return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+        }
+
+        function processBadges(badges) {
+            const badgeMappings = {
+                'HOUSE_BRILLIANCE': './badges/House_Brilliance.svg',
+                'Uses Automod': 'link_to_automod_badge_image',
+                'This server has Bot Name premium': 'link_to_bot_premium_badge_image',
+                // osv... 
+            };
+
+            let badgesHTML = '';
+
+            for (const badge of badges) {
+                const badgeName = badgeMappings[badge.Title];
+                if (badgeName) {
+                    badgesHTML += `<img src="${badgeName}.png" alt="${badge.Title}" title="${badge.Title}"> `;
+                } else {
+                    badgesHTML += `${badge.Title} `;
+                }
+            }
+
+            return badgesHTML;
         }
     </script>
 </body>
