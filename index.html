@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discord User Info</title>
+</head>
+<body>
+    <h1>Discord User Info</h1>
+    <label for="userIdInput">Enter Discord User ID:</label>
+    <input type="text" id="userIdInput">
+    <button onclick="getUserInfo()">Get User Info</button>
+    <div id="userInfo"></div>
+
+    <script>
+        async function getUserInfo() {
+            const userId = document.getElementById('userIdInput').value;
+            const apiUrl = `https://discordlookup.mesavirep.xyz/v1/user/${userId}`;
+
+            try {
+                const response = await fetch(apiUrl);
+                const data = await response.json();
+                displayUserInfo(data);
+            } catch (error) {
+                console.error('Error fetching user info:', error);
+            }
+        }
+
+        function displayUserInfo(userInfo) {
+            const userInfoContainer = document.getElementById('userInfo');
+            userInfoContainer.innerHTML = '';
+
+            for (const [key, value] of Object.entries(userInfo)) {
+                const infoItem = document.createElement('p');
+                infoItem.textContent = `${key}: ${value}`;
+                userInfoContainer.appendChild(infoItem);
+            }
+        }
+    </script>
+</body>
+</html>
