@@ -32,12 +32,10 @@
             const userInfoContainer = document.getElementById('userInfo');
             userInfoContainer.innerHTML = '';
 
-            const fieldsToShow = ['username', 'avatar', 'created_at'];
+            const fieldsToShow = ['username', 'global_name', 'avatar', 'created_at', 'premium_type', 'banner', 'badges'];
 
             fieldsToShow.forEach(field => {
                 if (userInfo[field] !== null && userInfo[field] !== undefined) {
-                    let fieldName = field.replace('_', ' ');
-                    fieldName = fieldName.charAt(0).toUpperCase() + fieldName.slice(1);
                     let fieldValue = userInfo[field];
 
                     // Håndtering af specifik formatering for 'created_at'
@@ -46,7 +44,7 @@
                     }
 
                     const infoItem = document.createElement('p');
-                    infoItem.textContent = `${fieldName}: ${fieldValue}`;
+                    infoItem.textContent = `${field}: ${fieldValue}`;
                     userInfoContainer.appendChild(infoItem);
                 }
             });
