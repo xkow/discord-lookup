@@ -1,6 +1,6 @@
 # Discord User Lookup
 
-This web application allows users to look up information about Discord users using their User ID. It utilizes the [Discord Lookup API](https://github.com/mesalytic/discord-lookup-api) to fetch user data including username, avatar, creation date, premium status, badges, etc. The application displays basic user information along with their avatar and banner images.
+This web application allows users to look up information about Discord users using their User ID. It utilizes the [Discord Lookup API](https://github.com/mesalytic/discord-lookup-api) by mesalytic to fetch user data including username, avatar, creation date, premium status, badges, etc. The application displays basic user information along with their avatar and banner images.
 
 ## Usage
 
