@@ -11,6 +11,7 @@
     <input type="text" id="userIdInput">
     <button onclick="getUserInfo()">Get User Info</button>
     <div id="userInfo"></div>
+    <div id="avatarContainer"></div>
 
     <script>
         async function getUserInfo() {
@@ -21,6 +22,7 @@
                 const response = await fetch(apiUrl);
                 const data = await response.json();
                 displayUserInfo(data);
+                displayAvatar(data.avatar.link);
             } catch (error) {
                 console.error('Error fetching user info:', error);
             }
@@ -30,11 +32,38 @@
             const userInfoContainer = document.getElementById('userInfo');
             userInfoContainer.innerHTML = '';
 
-            for (const [key, value] of Object.entries(userInfo)) {
-                const infoItem = document.createElement('p');
-                infoItem.textContent = `${key}: ${value}`;
-                userInfoContainer.appendChild(infoItem);
-            }
+            const fieldsToShow = ['username', 'avatar', 'created_at'];
+
+            fieldsToShow.forEach(field => {
+                if (userInfo[field] !== null && userInfo[field] !== undefined) {
+                    let fieldName = field.replace('_', ' ');
+                    fieldName = fieldName.charAt(0).toUpperCase() + fieldName.slice(1);
+                    let fieldValue = userInfo[field];
+
+                    // Håndtering af specifik formatering for 'created_at'
+                    if (field === 'created_at') {
+                        fieldValue = formatDate(userInfo[field]);
+                    }
+
+                    const infoItem = document.createElement('p');
+                    infoItem.textContent = `${fieldName}: ${fieldValue}`;
+                    userInfoContainer.appendChild(infoItem);
+                }
+            });
+        }
+
+        function displayAvatar(avatarLink) {
+            const avatarContainer = document.getElementById('avatarContainer');
+            avatarContainer.innerHTML = '';
+
+            const avatarImg = document.createElement('img');
+            avatarImg.src = avatarLink;
+            avatarContainer.appendChild(avatarImg);
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
         }
     </script>
 </body>
