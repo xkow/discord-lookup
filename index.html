@@ -4,14 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Discord User Info</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
 </head>
 <body>
-    <h1>Discord User Info</h1>
-    <label for="userIdInput">Enter Discord User ID:</label>
-    <input type="text" id="userIdInput">
-    <button onclick="getUserInfo()">Get User Info</button>
-    <div id="userInfo"></div>
-    <div id="avatarContainer"></div>
+    <div class="container">
+        <h1>Discord User Info</h1>
+        <div class="input-container">
+            <label for="userIdInput">Enter Discord User ID:</label>
+            <input type="text" id="userIdInput">
+            <button onclick="getUserInfo()">Get User Info</button>
+        </div>
+        <div id="userInfo"></div>
+        <div id="avatarContainer"></div>
+        <div id="bannerContainer"></div>
+
+    </div>
 
     <script>
         async function getUserInfo() {
@@ -23,6 +32,8 @@
                 const data = await response.json();
                 displayUserInfo(data);
                 displayAvatar(data.avatar.link);
+                displayBanner(data.banner.link);
+
             } catch (error) {
                 console.error('Error fetching user info:', error);
             }
@@ -43,10 +54,6 @@
                         fieldValue = formatDate(userInfo[field]);
                     }
 
-                    if (field === 'badges') {
-                        fieldValue = processBadges(userInfo[field]);
-                    }
-
                     const infoItem = document.createElement('p');
                     infoItem.textContent = `${field}: ${fieldValue}`;
                     userInfoContainer.appendChild(infoItem);
@@ -63,31 +70,18 @@
             avatarContainer.appendChild(avatarImg);
         }
 
+        function displayBanner(bannerLink) {
+            const bannerContainer = document.getElementById('bannerContainer');
+            bannerContainer.innerHTML = '';
+
+            const bannerImg = document.createElement('img');
+            bannerImg.src = bannerLink;
+            bannerContainer.appendChild(bannerImg);
+        }
+
         function formatDate(dateString) {
             const date = new Date(dateString);
             return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-        }
-
-        function processBadges(badges) {
-            const badgeMappings = {
-                'HOUSE_BRILLIANCE': './badges/House_Brilliance.svg',
-                'Uses Automod': 'link_to_automod_badge_image',
-                'This server has Bot Name premium': 'link_to_bot_premium_badge_image',
-                // osv... 
-            };
-
-            let badgesHTML = '';
-
-            for (const badge of badges) {
-                const badgeName = badgeMappings[badge.Title];
-                if (badgeName) {
-                    badgesHTML += `<img src="${badgeName}.png" alt="${badge.Title}" title="${badge.Title}"> `;
-                } else {
-                    badgesHTML += `${badge.Title} `;
-                }
-            }
-
-            return badgesHTML;
         }
     </script>
 </body>
