@@ -10,7 +10,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>Discord User Info</h1>
+        <h1>Discord User Lookup</h1>
         <div class="input-container">
             <label for="userIdInput">Enter Discord User ID:</label>
             <input type="text" id="userIdInput">
@@ -21,9 +21,17 @@
         <div id="bannerContainer"></div>
 
     </div>
+    <div id="userData" class="data"></div>
+    <div class="copy-button-container">
+        <button id="copyAllDataButton" onclick="copyAllDataToClipboard()">Copy All Data</button>
+    </div>
+</div>
+    </div>
 
     <script>
         async function getUserInfo() {
+            updateCopyButtonVisibility();
+
             const userId = document.getElementById('userIdInput').value;
             const apiUrl = `https://discordlookup.mesavirep.xyz/v1/user/${userId}`;
 
@@ -83,6 +91,10 @@
             const date = new Date(dateString);
             return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
         }
+
+
+
     </script>
+        <script src="script.js"></script>
 </body>
 </html>

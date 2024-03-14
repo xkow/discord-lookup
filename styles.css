@@ -56,12 +56,27 @@ body {
     background-color: #677BC4; /* Hover state background color */
 }
 
-#userInfo {
-    margin-bottom: 20px;
+.data {
     text-align: left; /* Align user info text to left */
+    margin-bottom: 20px;
 }
 
-#avatarContainer img {
-    max-width: 100%;
+#copyAllDataButton {
+    padding: 10px 20px;
+    border: none;
+    background-color: #7289DA; /* Button background color */
+    color: #FFFFFF; /* Button text color */
     border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: none; /* Hide button by default */
+}
+
+#copyAllDataButton.show {
+    display: block; /* Show button when user ID is entered */
+}
+
+.copy-button-container {
+    display: flex;
+    justify-content: center;
 }
